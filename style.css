@@ -2,31 +2,39 @@
     background:white; 
     padding-bottom: 20px;
     padding-top:20px;
-    margin-top: 10px;
-    
+    margin-top: 5px; 
+     
 }
-.header img{
-   
+.header img{ 
    width: 200px;
    height: 200px;
-    margin-top: 0;
-    
+    margin-top: 0; 
 }
+.header .loginlink{
+    padding-right:20px; 
+    padding-top: 10px;
+    background-color: #f40caf;
+    width: 50px;
+    height: 30px;
+    margin-left: 1250px;
+    margin-bottom: 50px;
+}
+.header .loginlink .link-button{
+    font-family: sans-serif;
+    color: white;
+    text-decoration: none;
+}
+
 .header .nav ul{
     list-style-type: none;
     margin:0;
     padding: 0;
     overflow: hidden;
-    
     margin-left:1000px;
-    
-    
 }
 
 .header .nav ul li{
     float: left;
-    
-
 }
 .header .nav ul li a{
     display:block;
@@ -36,6 +44,7 @@
     font-family: sans-serif;
     font-size: 15px;
     padding-right:1px; 
+
 }
 .nav .dropdown{
     float:left;
