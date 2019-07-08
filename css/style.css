@@ -16,7 +16,7 @@
     padding-top: 10px;
     width: 50px;
     height: 30px;
-    padding-left: 600px;
+    padding-left: 800px;
     float: left;
 }
 .header .loginlink .link-button{
@@ -34,8 +34,7 @@
     padding-top: 10px;
     width: 50px;
     height: 30px;
-    
-    margin-left:1000px;
+    margin-left:1050px;
     margin-bottom: 50px;
 }
 .header .registerlink .register-button{
@@ -55,8 +54,9 @@
     color: white; 
     width:300px;
     height:250px;
-    padding-left: 15px;
+    padding-left: 5px;
     padding-top: 15px;
+    margin-right:5px;
     position: fixed;
     z-index: 999;
     display: none;
@@ -89,7 +89,7 @@
     background: green;
     color:white; 
     padding-bottom:30px;
-    padding-left: 50px;
+    padding-left: 2px;
     padding-top: 30px;
     width:300px;
     position: fixed;
