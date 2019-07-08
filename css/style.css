@@ -14,19 +14,124 @@
 .header .loginlink{
     padding-right:20px; 
     padding-top: 10px;
-    background-color: #f40caf;
     width: 50px;
     height: 30px;
-    margin-left: 1250px;
-    margin-bottom: 50px;
+    padding-left: 600px;
+    float: left;
 }
 .header .loginlink .link-button{
     font-family: sans-serif;
     color: white;
     text-decoration: none;
+    background-color: #f40caf;
+    width: 80px;
+    height: 40px;
+    border:2px;
+    opacity: 0.8;
 }
-
-
+.header .registerlink{
+    padding-right:20px; 
+    padding-top: 10px;
+    width: 50px;
+    height: 30px;
+    
+    margin-left:1000px;
+    margin-bottom: 50px;
+}
+.header .registerlink .register-button{
+    font-family: sans-serif;
+    color: white;
+    text-decoration: none;
+    background-color: #f40caf;
+    width: 80px;
+    height: 40px;
+    border:2px;
+    opacity: 0.8;
+    
+}
+.header .loginlink .login-form{
+    font-family: sans-serif; 
+    background:aqua;
+    color: white; 
+    width:300px;
+    height:250px;
+    padding-left: 15px;
+    padding-top: 15px;
+    position: fixed;
+    z-index: 999;
+    display: none;
+}
+.header .loginlink .login-form #email{
+    width:250px;
+    height:30px; 
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+.header .loginlink .login-form #password{
+    width:250px;
+    height:30px; 
+    border-radius: 2px;
+}
+.header .loginlink .login-form #submit{
+    color: white; 
+    background-color: #f40caf;
+    margin-top: 20px;
+    padding:14px 40px;
+    border:2px;
+    border-radius: 2px;
+}
+.header .loginlink .link-button:hover .login-form{
+    display: block;
+    opacity: 1;
+}
+.header .registerlink .register-form{
+    font-family: sans-serif; 
+    background: aqua;
+    color:white; 
+    padding-bottom:30px;
+    padding-left: 50px;
+    padding-top: 30px;
+    width:300px;
+    position: fixed;
+    z-index: 999;
+    display: none;
+}
+.header .registerlink .register-form #name{
+    width:250px;
+    height:30px; 
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+.header .registerlink .register-form #email{
+    width:250px;
+    height:30px; 
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+.header .registerlink .register-form #password{
+    width:250px;
+    height:30px; 
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+.header .registerlink .register-form #cpassword{
+    width:250px;
+    height:30px; 
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+.header .registerlink .register-form #submit{
+    color: white; 
+    background-color: #f40caf;
+    margin-top: 20px;
+    padding:14px 40px;
+    border:2px;
+    border-radius: 2px;
+}
+.header .registerlink .register-button:hover .register-form{
+    display: block;
+    opacity: 1;
+}
 .header .nav ul{
     list-style-type: none;
     margin:0;

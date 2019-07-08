@@ -29,30 +29,31 @@
     font-family: sans-serif; 
     background-image: url("../images/background.jpg");
     color:white; 
-    padding-bottom: 300px;
+    padding-bottom:30px;
     padding-left: 50px;
     padding-top: 30px;
+    width:300px;
 }
 .register-form #name{
-    width:25%;
+    width:250px;
     height:30px; 
     border-radius: 2px;
     margin-bottom: 20px;
 }
 .register-form #email{
-    width:25%;
+    width:250px;
     height:30px; 
     border-radius: 2px;
     margin-bottom: 20px;
 }
 .register-form #password{
-    width:25%;
+    width:250px;
     height:30px; 
     border-radius: 2px;
     margin-bottom: 20px;
 }
 .register-form #cpassword{
-    width:25%;
+    width:250pxs;
     height:30px; 
     border-radius: 2px;
     margin-bottom: 20px;
