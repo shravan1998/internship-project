@@ -47,6 +47,7 @@
     border:2px;
     opacity: 0.8;
     
+    
 }
 .header .loginlink .login-form{
     font-family: sans-serif; 
@@ -60,6 +61,7 @@
     position: fixed;
     z-index: 999;
     display: none;
+    
 }
 .header .loginlink .login-form #email{
     width:250px;
