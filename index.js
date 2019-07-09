@@ -20,9 +20,16 @@ app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 
 app.use(express.static(__dirname+'/'));
+app.use(session({
+    secret:'secret',
+    resave:false,
+    saveUninitialized:true,
+    cookie:{secure:true}
+}));
 
 app.get('/',function(req,res){
-    res.render('index');
+    res.render('index',{success:false,errors:req.session.errors});
+    req.session.errors=null;
 });
 app.post('/',function(req,res){
     var username = req.body.name;
