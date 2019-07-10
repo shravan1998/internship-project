@@ -171,6 +171,9 @@
 .header ul li .dropdown li{
     display: block;   
 }
+.table{
+    font-family: sans-serif;
+}
 .table table{
     border-collapse: collapse;
     width:100%;

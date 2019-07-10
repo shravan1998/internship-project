@@ -4,7 +4,9 @@ var path = require('path');
 var ejs = require('ejs');
 var session = require('express-session');
 var express = require('express');
-
+var bcrypt =require('bcrypt');
+var saltRounds =  10;
+var passport = require("passport");
 
 const connection = mysql.createConnection({
     host:'localhost',
@@ -25,6 +27,8 @@ app.use(session({
     cookie:{secure:true}
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.get('/',function(req,res){
     res.render('index',{success:false,errors:req.session.errors});
     req.session.errors=null;
@@ -41,7 +45,8 @@ app.post('/submit',function(req,res){
     var password=req.body.password;
     var cpassword=req.body.cpassword;
     if(password.length>=6 && cpassword==password){
-        let sql="INSERT INTO user VALUES('"+name+"','"+email+"','"+password+"')";
+        bcrypt.hash(password, saltRounds, function(err, hash) {
+        let sql="INSERT INTO user VALUES('"+name+"','"+email+"','"+hash+"')";
         connection.query(sql,function(err,results,field){
             if(err){
                 console.log(err);
@@ -49,16 +54,19 @@ app.post('/submit',function(req,res){
             else{
                 console.log(results);
             }
-           return res.render('/');
+            
+           return res.redirect('/');
         });
+    });
     }
-    
+
 });
 app.post('/login',function(req,res){
     var obj={};
     var email=req.body.email;
     var password=req.body.password;
-    let sql="SELECT * FROM `user` WHERE `email`='"+email+"' AND `password`='"+password+"';";
+    
+    let sql="SELECT * FROM `user` WHERE `email`='"+email+"';";
     connection.query(sql,function(err,results,field){
         if(err){
             console.log(err);
@@ -67,8 +75,11 @@ app.post('/login',function(req,res){
         else{
             console.log(results);
         }
-        return res.render('routes/userdb',{user:results});
+        return res.render('routes/userdb',{user:results,success:false,errors:req.session.errors});
+        req.session.errors=null;
+
     });
+    
 });
 app.set('views',__dirname);
 
