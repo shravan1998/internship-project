@@ -25,5 +25,19 @@
                </ul>
             </div>
         </div>
+    <div class="table">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        <% user.forEach(function(x){ %>
+        <tr>
+            <td><%= x.NAME %></td>
+            <td><%= x.EMAIL %></td>
+        </tr>
+        <% }); %>
+    </table>
+        </div>
     </body>
 </html>
