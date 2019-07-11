@@ -7,7 +7,7 @@ var express = require('express');
 var bcrypt =require('bcrypt');
 var saltRounds =  10;
 var passport = require("passport");
-
+var LocalStrategy = require("passport-local").Strategy;
 const connection = mysql.createConnection({
     host:'localhost',
     username:'root',
@@ -33,6 +33,21 @@ app.get('/',function(req,res){
     res.render('index',{success:false,errors:req.session.errors});
     req.session.errors=null;
 });
+app.get('/db',function(req,res){
+    res.render('userdb',{success:false,errors:req.session.errors});
+    req.session.errors=null;
+});
+passport.use(new LocalStrategy({
+    email:'email',
+    password:'password'
+    },
+    function(email, password, done) {
+     console.log(email);
+     console.log(password);
+        //return done(null, false);
+      
+    }
+  ));
 connection.query('CREATE TABLE IF NOT EXISTS user(NAME CHAR(255) NOT NULL,EMAIL VARCHAR(255) NOT NULL,PASSWORD VARCHAR(25))',
     function(err){
         console.log(err);
@@ -61,26 +76,13 @@ app.post('/submit',function(req,res){
     }
 
 });
-app.post('/login',function(req,res){
-    var obj={};
-    var email=req.body.email;
-    var password=req.body.password;
+app.post('/login',
+passport.authenticate('local',{
+  successRedirect:'/',
+  failureMessage:'400'
     
-    let sql="SELECT * FROM `user` WHERE `email`='"+email+"';";
-    connection.query(sql,function(err,results,field){
-        if(err){
-            console.log(err);
-            return res.redirect('/');
-        }
-        else{
-            console.log(results);
-        }
-        return res.render('routes/userdb',{user:results,success:false,errors:req.session.errors});
-        req.session.errors=null;
-
-    });
     
-});
+}));
 app.set('views',__dirname);
 
 app.set('view engine','ejs');
