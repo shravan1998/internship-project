@@ -7,6 +7,8 @@ var express = require('express');
 var bcrypt =require('bcrypt');
 var saltRounds =  10;
 var passport = require("passport");
+var flash = require("connect-flash");
+var MySqlStore = require('express-mysql-session')(session);
 var LocalStrategy = require("passport-local").Strategy;
 const connection = mysql.createConnection({
     host:'localhost',
@@ -14,37 +16,65 @@ const connection = mysql.createConnection({
     password:'',
     database: 'internship'   
 });
-
+var options={
+        host:'localhost',
+        username:'root',
+        password:'',
+        database: 'internship'   
+};
+var sessionStore = new MySqlStore(options);
 const app  = express();
-app.use(bodyparser.urlencoded({extended:false}));
+app.use(flash());
+app.use(bodyparser.urlencoded({extended:true}));
 app.use(bodyparser.json());
 
 app.use(express.static(__dirname+'/'));
 app.use(session({
-    secret:'secret',
+    secret:'sjhdisjjjlhl',
     resave:false,
-    saveUninitialized:true,
-    cookie:{secure:true}
+    saveUninitialized:false,
+    store:sessionStore,
+    http:true
+    //cookie:{secure:true}
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.get('/',function(req,res){
-    res.render('index',{success:false,errors:req.session.errors});
-    req.session.errors=null;
+    res.render('index');
+    
 });
-app.get('/db',function(req,res){
-    res.render('userdb',{success:false,errors:req.session.errors});
+app.get('/home',authenticationMiddleware (),function(req,res){
+    res.render('routes/home',{success:false,errors:req.session.errors});
     req.session.errors=null;
 });
 passport.use(new LocalStrategy({
-    email:'email',
-    password:'password'
+    username:'username',
+    password:'password',
+    passReqToCallback:true
     },
-    function(email, password, done) {
-     console.log(email);
+    function(req,username, password, done) {
+     console.log(username);
      console.log(password);
-        //return done(null, false);
+     let sql="SELECT password FROM user WHERE `EMAIL`='"+username+"';"
+    connection.query(sql,function(err,results,fields){
+        if(err){
+            done(err);
+        }
+        if(results.length === 0){
+            done(null,false);
+        }
+        const hash=results[0];
+        bcrypt.compare(password,hash,function(err,response){
+            if(response === true){
+                return done(null,{user_id: 43});
+            }
+            else{
+                done(null,false);
+            }
+        });
+    });
+     return done(null, 'login success');
       
     }
   ));
@@ -69,19 +99,40 @@ app.post('/submit',function(req,res){
             else{
                 console.log(results);
             }
-            
-           return res.redirect('/');
+            connection.query('SELECT LAST_INSERT_ID() AS user_id',function(err,results,fields){
+                if(err){
+                    console.log(err);
+                }
+                const user_id=results[0];
+                req.logIn(user_id,function(err){
+                    return res.redirect('/');
+                });
+                
+            });
         });
     });
     }
 
 });
+passport.serializeUser(function(user_id,done){
+    done(null,user_id);
+});
+passport.deserializeUser(function(user_id,done){
+    done(null,user_id);
+});
+function authenticationMiddleware () {  
+	return (req, res, next) => {
+		console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
+
+	    if (req.isAuthenticated()) return next();
+	    res.redirect('/')
+	}
+}
 app.post('/login',
 passport.authenticate('local',{
-  successRedirect:'/',
-  failureMessage:'400'
-    
-    
+    successRedirect:'/home',
+    failureRedirect:'/',
+    failureFlash:true
 }));
 app.set('views',__dirname);
 
