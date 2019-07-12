@@ -105,12 +105,14 @@ app.post('/submit',function(req,res){
                 }
                 const user_id=results[0];
                 req.logIn(user_id,function(err){
-                    return res.redirect('/');
+                    return res.redirect('/home');
+                    console.log(err);
                 });
                 
             });
         });
     });
+    //res.redirect('/');
     }
 
 });
@@ -125,7 +127,7 @@ function authenticationMiddleware () {
 		console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
 
 	    if (req.isAuthenticated()) return next();
-	    res.redirect('/')
+	   
 	}
 }
 app.post('/login',
