@@ -53,28 +53,29 @@ passport.use(new LocalStrategy({
     password:'password',
     passReqToCallback:true
     },
-    function(req,username, password, done) {
+    function(req,username, password, verified) {
      console.log(username);
      console.log(password);
      let sql="SELECT password FROM user WHERE `EMAIL`='"+username+"';"
     connection.query(sql,function(err,results,fields){
         if(err){
-            done(err);
+            verified(err);
+            console.log(err);
         }
         if(results.length === 0){
-            done(null,false);
+            verified(null,false);
         }
         const hash=results[0];
         bcrypt.compare(password,hash,function(err,response){
             if(response === true){
-                return done(null,{user_id: 43});
+                return verified(null,{user_id: 43});
             }
             else{
-                done(null,false);
+                verified(null,false);
             }
         });
     });
-     return done(null, 'login success');
+     return verified(null, 'login success');
       
     }
   ));
@@ -105,8 +106,9 @@ app.post('/submit',function(req,res){
                 }
                 const user_id=results[0];
                 req.logIn(user_id,function(err){
-                    return res.redirect('/home');
-                    console.log(err);
+        
+                   return res.redirect('/home');
+                   
                 });
                 
             });
